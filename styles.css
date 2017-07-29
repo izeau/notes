@@ -1,0 +1,282 @@
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+.app {
+  height: 100%;
+  display: flex;
+}
+
+.sidebar {
+  border-right: 1px solid #ddd;
+  width: 30%;
+  max-width: 288px;
+  display: flex;
+  flex-direction: column;
+}
+
+.search {
+  height: 40px;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  padding: 0 7px;
+  align-items: center;
+  background: linear-gradient(to top, #f3f3f3, #fafafa);
+}
+
+.search-input {
+  flex: 1;
+  height: 26px;
+  outline: 0;
+  border-radius: 13px;
+  border: 1px solid #ccc;
+  padding: 0 25px;
+  order: 1;
+  font: inherit;
+}
+
+.search-input:focus {
+  border-color: #3ae;
+}
+
+.search-icon {
+  color: #aaa;
+  position: absolute;
+  left: 35px;
+}
+
+.search-input:focus + .search-icon {
+  color: #3ae;
+}
+
+.notes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+  background: #fafafa;
+  overflow: auto;
+}
+
+.note {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  height: 40px;
+  margin-top: -1px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px 10px 10px;
+  transition: .3s border-right-color;
+  border-right: 5px solid transparent;
+}
+
+.note-current {
+  border-right-color: #3ae;
+}
+
+.note-title {
+  color: #666;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-meta {
+  color: #aaa;
+  font-size: .8em;
+  text-align: right;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.toolbar {
+  border-bottom: 1px solid #ddd;
+  background: linear-gradient(to top, #f3f3f3, #fafafa);
+  height: 40px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  display: none;
+}
+
+.toolbar-button {
+  background: transparent;
+  border: 0;
+  color: #666;
+  padding: 3px;
+  outline: 0;
+}
+
+.toolbar-button:active,
+.toolbar-button.active {
+  color: #3ae;
+}
+
+.toolbar-separator {
+  border-left: 1px solid #ddd;
+  height: 100%;
+  margin: 0 10px;
+}
+
+.render {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.input {
+  padding: 1.6em 2ch;
+  flex: 1;
+  outline: 0;
+  border: 0;
+  font: 16px/1.6 'Fira Code', Inconsolata, Consolas, Monaco, Ubuntu Mono,
+    monospace;
+  resize: none;
+  color: transparent;
+  caret-color: #333;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.output {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  flex: 1;
+  right: 0;
+  background: transparent;
+  color: #333;
+  padding: 1.6em 2ch;
+  font: 16px/1.6 'Fira Code', Inconsolata, Consolas, Monaco, Ubuntu Mono,
+    monospace;
+  white-space: pre-wrap;
+}
+
+.output-token {
+  color: #aaa;
+  font-weight: 100;
+}
+
+.output strong {
+  /* double star (**) ligature kludge */
+  margin-left: -.055ch;
+}
+
+.output h1, .output h2, .output h3, .output h4, .output h5, .output h6 {
+  display: inline;
+  font-size: 1em;
+}
+
+.output hr {
+  border: 0;
+  margin: .2em 0 .2em -2ch;
+  padding: 0;
+  background: #eee;
+  height: 1.2em;
+  width: 100%;
+  position: absolute;
+  transform: translateY(-1.6em);
+  z-index: -1;
+}
+
+.output ul, .output ol {
+  display: inline;
+  padding: 0;
+  list-style: none;
+}
+
+.output li {
+  display: inline;
+}
+
+.output blockquote, .output pre {
+  margin: 0 -1.25ch;
+  width: 100%;
+  display: inline-block;
+  padding-left: .75ch;
+  border-left: .5ch solid #ddd;
+  background: #eee;
+  font: inherit;
+}
+
+.output a {
+  color: #3ae;
+}
+
+.output code {
+  font: inherit;
+  background: #eee;
+}
+
+.dropdown {
+  display: flex;
+  position: absolute;
+  background: #333;
+  border-radius: 5px;
+  height: 30px;
+  color: #ccc;
+  font: 16px 'Fira Code', Inconsolata, Consolas, Monaco, Ubuntu Mono,
+    monospace;
+  z-index: 2;
+  align-items: center;
+  padding: 0 .5ch;
+}
+
+.dropdown::before {
+  content: '';
+  display: block;
+  border: 5px solid #333;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  position: absolute;
+  top: -5px;
+  left: 13px;
+  transform: rotate(45deg);
+}
+
+.dropdown-item {
+  flex: 1;
+  text-align: center;
+  margin-left: -1px;
+  cursor: pointer;
+  padding: 0 .5ch;
+}
+
+.dropdown-item:hover {
+  color: #fff;
+}
+
+.clear-button {
+  color: #aaa;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  color: #666;
+}
+
+.clear-button:active {
+  color: #3ae;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Notes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app">
+      <div class="sidebar">
+        <div class="search">
+          <button class="toolbar-button" v-on:click="newNote()"><i class="toolbar-icon octicon octicon-plus"></i></button>
+          <input class="search-input" type="text" v-model="search">
+          <i class="search-icon octicon octicon-search"></i>
+          <button class="toolbar-button clear-button" v-on:click="search = ''"><i class="octicon octicon-x"></i></button>
+        </div>
+        <ul class="notes">
+          <li
+            class="note"
+            v-for="note in filteredNotes"
+            v-bind:class="{ 'note-current': note === currentNote }"
+            v-on:click="openNote(note.id)"
+          >
+            <div class="note-title" v-if="note.title" v-html="note.title"></div>
+            <div class="note-title" v-else><em>Unnamed note</em></div>
+            <div class="note-meta">{{ note.meta }}</div>
+          </li>
+        </ul>
+      </div>
+      <main class="editor">
+        <div class="toolbar">
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-chevron-up"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-chevron-down"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-bold"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-italic"></i></button>
+          <div class="toolbar-separator"></div>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-triangle-left"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-triangle-right"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-tasklist"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-list-ordered"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-list-unordered"></i></button>
+          <div class="toolbar-separator"></div>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-link"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-gist"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-code"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-quote"></i></button>
+          <button class="toolbar-button"><i class="toolbar-icon octicon octicon-horizontal-rule"></i></button>
+          <div class="toolbar-separator"></div>
+        </div>
+        <div class="render" v-on:click="click">
+          <textarea class="input" v-on:keydown="keydown" v-on:input="parse" v-on:scroll="scroll" v-bind:value="currentNote.body" autofocus></textarea>
+          <div class="output" v-html="out" v-bind:style="{ transform: translate }"></div>
+          <div class="dropdown" v-bind:style="{ display: dropdown ? 'flex' : 'none', left: dropdown[0], top: dropdown[1] }">
+            <span class="dropdown-item" title="To do">.-</span>
+            <span class="dropdown-item" title="Done">&lt;&gt;</span>
+            <span class="dropdown-item" title="Migrated">|&gt;</span>
+            <span class="dropdown-item" title="Scheduled">&lt;|</span>
+            <span class="dropdown-item" title="Event">::</span>
+            <span class="dropdown-item" title="Note">--</span>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+    <script src="./scripts.js"></script>
+  </body>
+</html>
